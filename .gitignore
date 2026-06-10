@@ -1,0 +1,9 @@
+node_modules
+dist
+*.local
+.DS_Store
+
+# Geen persoonsgegevens / CSV-exports in de repo
+*.csv
+public/*.csv
+fladsort-indeling.xlsx

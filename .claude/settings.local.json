@@ -1,0 +1,8 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(ls \"D:\\\\!SoonCloud\\\\Projecten Programming\\\\Fladsort\")",
+      "Bash(node -e ' *)"
+    ]
+  }
+}
