@@ -4,7 +4,8 @@ import type { SchoolAlias } from "../config/settings"
 import { useSettings } from "../state/settingsStore"
 import { distinctRawSchools, aliasIdFromDisplay } from "../lib/school"
 
-type Tab = "locatie" | "groepen" | "grootte" | "statussen" | "scholen"
+export type SettingsTab = "locatie" | "groepen" | "grootte" | "statussen" | "scholen"
+type Tab = SettingsTab
 
 const TABS: { id: Tab; label: string }[] = [
   { id: "locatie", label: "Locatie & profielen" },
@@ -14,8 +15,16 @@ const TABS: { id: Tab; label: string }[] = [
   { id: "scholen", label: "Scholen" },
 ]
 
-export function SettingsModal({ persons, onClose }: { persons: Person[]; onClose: () => void }) {
-  const [tab, setTab] = useState<Tab>("locatie")
+export function SettingsModal({
+  persons,
+  onClose,
+  initialTab = "locatie",
+}: {
+  persons: Person[]
+  onClose: () => void
+  initialTab?: SettingsTab
+}) {
+  const [tab, setTab] = useState<Tab>(initialTab)
 
   return (
     <div className="modal-backdrop" onClick={onClose}>

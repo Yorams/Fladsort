@@ -16,7 +16,7 @@ import { Uploader } from "./components/Uploader"
 import { GroupBoard } from "./components/GroupBoard"
 import { ConflictPanel, UNASSIGN_ZONE } from "./components/ConflictPanel"
 import { ChildDetail } from "./components/ChildDetail"
-import { SettingsModal } from "./components/SettingsModal"
+import { SettingsModal, type SettingsTab } from "./components/SettingsModal"
 
 function Workspace() {
   const { settings, updateSettings } = useSettings()
@@ -24,7 +24,9 @@ function Workspace() {
   const res = store.result
   const [selected, setSelected] = useState<string | null>(null)
   const [dragId, setDragId] = useState<string | null>(null)
-  const [settingsOpen, setSettingsOpen] = useState(false)
+  const [settingsTab, setSettingsTab] = useState<SettingsTab | null>(null)
+
+  const openSettings = (tab: SettingsTab = "locatie") => setSettingsTab(tab)
 
   // Genereer automatisch ontbrekende schoolaliassen uit de geladen CSV.
   // Idempotent: zodra alles gekoppeld is, voegt dit niets meer toe.
@@ -55,7 +57,7 @@ function Workspace() {
 
   return (
     <div className="app">
-      <Toolbar store={store} onOpenSettings={() => setSettingsOpen(true)} />
+      <Toolbar store={store} onOpenSettings={openSettings} />
       <DndContext sensors={sensors} onDragStart={onDragStart} onDragEnd={onDragEnd}>
         <div className="main">
           <div className="board-wrap">
@@ -82,7 +84,9 @@ function Workspace() {
         </DragOverlay>
       </DndContext>
 
-      {settingsOpen && <SettingsModal persons={store.persons} onClose={() => setSettingsOpen(false)} />}
+      {settingsTab && (
+        <SettingsModal persons={store.persons} initialTab={settingsTab} onClose={() => setSettingsTab(null)} />
+      )}
     </div>
   )
 }

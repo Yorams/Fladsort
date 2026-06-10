@@ -450,9 +450,17 @@ body {
   font-weight: 600;
   color: var(--accent-hover);
   background: var(--accent-soft);
-  padding: 4px 11px;
+  padding: 5px 12px;
+  border: 1px solid transparent;
   border-radius: 999px;
   white-space: nowrap;
+  cursor: pointer;
+  font-family: inherit;
+  transition: background 0.15s, border-color 0.15s;
+}
+.location:hover {
+  background: #dbeafe;
+  border-color: var(--accent);
 }
 
 /* --- Settings modal --- */
