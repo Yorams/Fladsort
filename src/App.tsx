@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import {
   DndContext,
   DragOverlay,
@@ -10,6 +10,7 @@ import {
 } from "@dnd-kit/core"
 import { useFladsort } from "./state/store"
 import { SettingsProvider, useSettings } from "./state/settingsStore"
+import { suggestAliases } from "./lib/school"
 import { Toolbar } from "./components/Toolbar"
 import { Uploader } from "./components/Uploader"
 import { GroupBoard } from "./components/GroupBoard"
@@ -18,12 +19,22 @@ import { ChildDetail } from "./components/ChildDetail"
 import { SettingsModal } from "./components/SettingsModal"
 
 function Workspace() {
-  const { settings } = useSettings()
+  const { settings, updateSettings } = useSettings()
   const store = useFladsort(settings)
   const res = store.result
   const [selected, setSelected] = useState<string | null>(null)
   const [dragId, setDragId] = useState<string | null>(null)
   const [settingsOpen, setSettingsOpen] = useState(false)
+
+  // Genereer automatisch ontbrekende schoolaliassen uit de geladen CSV.
+  // Idempotent: zodra alles gekoppeld is, voegt dit niets meer toe.
+  useEffect(() => {
+    if (store.persons.length === 0) return
+    const extra = suggestAliases(store.persons, settings.schoolAliases)
+    if (extra.length > 0) {
+      updateSettings({ schoolAliases: [...settings.schoolAliases, ...extra] })
+    }
+  }, [store.persons, settings.schoolAliases, updateSettings])
 
   // Klein sleep-startdrempeltje zodat klikken (selecteren) blijft werken.
   const sensors = useSensors(useSensor(PointerSensor, { activationConstraint: { distance: 5 } }))

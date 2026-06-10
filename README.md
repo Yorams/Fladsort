@@ -70,8 +70,10 @@ Tabs:
 - **Statussen** — welke inschrijvingsstatussen standaard meedoen.
 - **Scholen** — schoolnaam-aliassen: koppel schrijfwijzen (bv. "Velduil", "OBS de Velduil",
   "De veldui") aan één nette naam. Varianten met dezelfde alias tellen in de indeling als
-  **dezelfde school**. De lijst toont ook alle ruwe schoolnamen uit je geladen CSV, zodat je
-  ongekoppelde varianten met één klik aan een alias hangt.
+  **dezelfde school**. Bij het laden van een CSV worden **ontbrekende aliassen automatisch
+  aangemaakt** (varianten met dezelfde genormaliseerde sleutel worden geclusterd; de meest
+  voorkomende schrijfwijze wordt de nette naam). De lijst toont alle ruwe schoolnamen uit je CSV
+  zodat je de automatische voorstellen kunt nalopen, hernoemen of samenvoegen.
 
 [`src/config/settings.json`](src/config/settings.json) is de **standaard (seed)** die een nieuw
 profiel bij de eerste keer overneemt — de werkelijke instellingen leven per locatie-profiel in de

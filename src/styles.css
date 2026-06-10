@@ -120,24 +120,87 @@ body {
   flex-direction: column;
 }
 
-/* --- Dropzone --- */
-.dropzone {
-  margin: auto;
-  max-width: 520px;
+/* --- Welkom / uploader --- */
+.welcome {
+  max-width: 560px;
+  margin: 40px auto;
   text-align: center;
-  padding: 48px;
+}
+.welcome-title {
+  margin: 0 0 6px;
+  font-size: 24px;
+}
+.welcome-lead {
+  color: var(--muted);
+  margin: 0 0 22px;
+  font-size: 14px;
+}
+
+/* --- Dropzone (klikbaar) --- */
+.dropzone {
+  display: block;
+  width: 100%;
+  text-align: center;
+  padding: 34px 32px;
   border: 2px dashed #cbd5e1;
   border-radius: 16px;
   background: #fff;
   color: var(--muted);
+  cursor: pointer;
+  font-family: inherit;
+  transition: border-color 0.15s, background 0.15s;
+}
+.dropzone:hover {
+  border-color: var(--accent);
+  background: var(--accent-soft);
 }
 .dropzone.drag {
   border-color: var(--accent);
   background: var(--accent-soft);
 }
-.dropzone h2 {
+.dz-icon {
+  font-size: 30px;
+  margin-bottom: 8px;
+}
+.dz-main {
   color: var(--ink);
-  margin: 0 0 8px;
+  font-weight: 600;
+  font-size: 15px;
+}
+.dz-sub {
+  font-size: 12px;
+  margin-top: 4px;
+}
+
+.welcome-info {
+  text-align: left;
+  margin-top: 24px;
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  padding: 18px 22px;
+  font-size: 13px;
+}
+.welcome-info > p {
+  margin: 0 0 10px;
+  color: var(--muted);
+}
+.welcome-info ul {
+  margin: 0;
+  padding-left: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  color: var(--ink);
+}
+.welcome-info li b {
+  color: var(--accent);
+}
+.welcome-privacy {
+  margin: 14px 0 0 !important;
+  padding-top: 12px;
+  border-top: 1px solid var(--line);
+  color: var(--muted) !important;
 }
 
 /* --- Group board --- */

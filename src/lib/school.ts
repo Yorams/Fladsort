@@ -63,6 +63,38 @@ export function distinctRawSchools(persons: Person[], aliases: SchoolAlias[]): R
     })
 }
 
+/**
+ * Stel automatisch nieuwe aliassen voor op basis van de geladen personen.
+ * Clustert ruwe schoolnamen die (nog) geen alias hebben op hun genormaliseerde
+ * sleutel; per cluster wordt de meest voorkomende schrijfwijze de nette naam en
+ * alle varianten worden de terms. Bestaande aliassen blijven ongemoeid; geeft
+ * ALLEEN de nieuw toe te voegen aliassen terug (leeg = niets te doen).
+ */
+export function suggestAliases(persons: Person[], existing: SchoolAlias[]): SchoolAlias[] {
+  const unmatched = distinctRawSchools(persons, existing).filter((r) => !r.resolution.aliasId)
+
+  const clusters = new Map<string, { raw: string; count: number }[]>()
+  for (const u of unmatched) {
+    const key = normalizeSchoolName(u.raw)
+    if (!key) continue
+    const list = clusters.get(key) ?? clusters.set(key, []).get(key)!
+    list.push({ raw: u.raw, count: u.count })
+  }
+
+  const taken = new Set(existing.map((a) => a.id))
+  const result: SchoolAlias[] = []
+  for (const variants of clusters.values()) {
+    // Nette naam = meest voorkomend; bij gelijk de langste (meestal de volledige vorm).
+    const sorted = [...variants].sort((a, b) => b.count - a.count || b.raw.length - a.raw.length)
+    const display = sorted[0].raw
+    let id = aliasIdFromDisplay(display)
+    while (taken.has(id)) id += "-2"
+    taken.add(id)
+    result.push({ id, display, terms: [...new Set(variants.map((v) => v.raw))] })
+  }
+  return result
+}
+
 /** Maak een stabiele alias-id uit een nette naam. */
 export function aliasIdFromDisplay(display: string): string {
   return (
