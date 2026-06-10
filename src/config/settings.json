@@ -1,5 +1,5 @@
 {
-  "locationName": "Houten",
+  "locationName": "Fladderlocatie",
   "targetGroups": 16,
   "maxChildrenPerGroup": 8,
   "preferEvenGroups": true,
@@ -27,28 +27,80 @@
     "De Ontdekkers"
   ],
   "schoolAliases": [
-    { "id": "het-mozaiek", "display": "Het Mozaïek", "terms": ["mozaiek", "muzaiek", "mozaik"] },
-    { "id": "t-schoolhuys", "display": "'t Schoolhuys", "terms": ["schoolhuys", "huys"] },
+    {
+      "id": "het-mozaiek",
+      "display": "Het Mozaïek",
+      "terms": ["mozaiek", "muzaiek", "mozaik"]
+    },
+    {
+      "id": "t-schoolhuys",
+      "display": "'t Schoolhuys",
+      "terms": ["schoolhuys", "huys"]
+    },
     { "id": "de-triangel", "display": "De Triangel", "terms": ["triangel"] },
-    { "id": "de-velduil", "display": "De Velduil", "terms": ["velduil", "veldui"] },
+    {
+      "id": "de-velduil",
+      "display": "De Velduil",
+      "terms": ["velduil", "veldui"]
+    },
     { "id": "de-vlinder", "display": "De Vlinder", "terms": ["vlinder"] },
     { "id": "de-wissel", "display": "De Wissel", "terms": ["wissel"] },
-    { "id": "montessori-houten", "display": "Montessori Basisschool Houten", "terms": ["montessori"] },
-    { "id": "aventurijn", "display": "Aventurijn", "terms": ["aventurijn", "avonturijn"] },
+    {
+      "id": "montessori-houten",
+      "display": "Montessori Basisschool Houten",
+      "terms": ["montessori"]
+    },
+    {
+      "id": "aventurijn",
+      "display": "Aventurijn",
+      "terms": ["aventurijn", "avonturijn"]
+    },
     { "id": "ridderspoor", "display": "Ridderspoor", "terms": ["ridderspoor"] },
-    { "id": "de-zonnewijzer", "display": "De Zonnewijzer", "terms": ["zonnewijzer"] },
+    {
+      "id": "de-zonnewijzer",
+      "display": "De Zonnewijzer",
+      "terms": ["zonnewijzer"]
+    },
     { "id": "wereldwijs", "display": "Wereldwijs", "terms": ["wereldwijs"] },
-    { "id": "johannes-bogerman", "display": "Johannes Bogermanschool", "terms": ["bogerman", "johannesbogerman"] },
+    {
+      "id": "johannes-bogerman",
+      "display": "Johannes Bogermanschool",
+      "terms": ["bogerman", "johannesbogerman"]
+    },
     { "id": "de-bijenkorf", "display": "De Bijenkorf", "terms": ["bijenkorf"] },
     { "id": "de-fontein", "display": "De Fontein", "terms": ["fontein"] },
     { "id": "de-stek", "display": "De Stek", "terms": ["stek"] },
-    { "id": "de-zevensprong", "display": "De Zevensprong", "terms": ["zevensprong"] },
+    {
+      "id": "de-zevensprong",
+      "display": "De Zevensprong",
+      "terms": ["zevensprong"]
+    },
     { "id": "de-plantage", "display": "De Plantage", "terms": ["plantage"] },
-    { "id": "van-harte", "display": "Van Harte School", "terms": ["van harte", "vanharte", "harte"] },
-    { "id": "berg-en-bosch", "display": "Berg en Bosch School", "terms": ["berg en bosch", "bergenbosch"] },
-    { "id": "st-michiel", "display": "St. Michiel (Schalkwijk)", "terms": ["michiel", "stmichiel", "sint michiel"] },
-    { "id": "de-boogerd", "display": "De Boogerd ('t Goy)", "terms": ["boogerd"] },
+    {
+      "id": "van-harte",
+      "display": "Van Harte School",
+      "terms": ["van harte", "vanharte", "harte"]
+    },
+    {
+      "id": "berg-en-bosch",
+      "display": "Berg en Bosch School",
+      "terms": ["berg en bosch", "bergenbosch"]
+    },
+    {
+      "id": "st-michiel",
+      "display": "St. Michiel (Schalkwijk)",
+      "terms": ["michiel", "stmichiel", "sint michiel"]
+    },
+    {
+      "id": "de-boogerd",
+      "display": "De Boogerd ('t Goy)",
+      "terms": ["boogerd"]
+    },
     { "id": "de-tweeklank", "display": "De Tweeklank", "terms": ["tweeklank"] },
-    { "id": "de-vrije-school", "display": "De Vrije School", "terms": ["vrije"] }
+    {
+      "id": "de-vrije-school",
+      "display": "De Vrije School",
+      "terms": ["vrije"]
+    }
   ]
 }

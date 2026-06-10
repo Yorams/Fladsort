@@ -3,6 +3,7 @@ import type { FladsortStore } from "../state/store";
 import { useSettings } from "../state/settingsStore";
 import type { SettingsTab } from "./SettingsModal";
 import { downloadXlsx } from "../lib/export";
+import vlinder from "../../assets/FladderVlinder.svg";
 
 interface Props {
   store: FladsortStore;
@@ -28,7 +29,8 @@ export function Toolbar({ store, onOpenSettings }: Props) {
 
   return (
     <div className="toolbar">
-      <h1>🦖 Fladsort</h1>
+      <img src={vlinder} style={{ height: "30px" }} />
+      <h1>Fladsort</h1>
       <button
         className="btn secondary"
         title="Locatie & profielen openen"

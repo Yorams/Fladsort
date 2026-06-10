@@ -1,5 +1,7 @@
 import { useRef, useState } from "react";
 import type { FladsortStore } from "../state/store";
+import vlinder from "../../assets/FladderVlinder.svg";
+import howtogetcsv from "../../assets/howtogetcsv.jpg";
 
 export function Uploader({ store }: { store: FladsortStore }) {
   const [drag, setDrag] = useState(false);
@@ -13,7 +15,10 @@ export function Uploader({ store }: { store: FladsortStore }) {
 
   return (
     <div className="welcome">
-      <h2 className="welcome-title">🦖 Welkom bij Fladsort</h2>
+      <h2 className="welcome-title">
+        <img src={vlinder} style={{ height: "40px", marginRight: "1rem" }} />
+        Welkom bij Fladsort
+      </h2>
       <p className="welcome-lead">
         Deel de kinderen van je locatie automatisch in, op basis van je
         inschrijvingen-export.
@@ -81,6 +86,13 @@ export function Uploader({ store }: { store: FladsortStore }) {
           🔒 Alle gegevens blijven in je browser — er wordt niets naar een
           server gestuurd.
         </p>
+      </div>
+      <div className="welcome-info">
+        <p>
+          Je kan via fladres hier een CSV downloaden om deze te gebruiken in
+          deze tool
+        </p>
+        <img src={howtogetcsv} className="howtogetcsv" />
       </div>
     </div>
   );

@@ -1,11 +1,16 @@
-import { useRef, useState } from "react"
-import type { Person } from "../types"
-import type { SchoolAlias } from "../config/settings"
-import { useSettings } from "../state/settingsStore"
-import { distinctRawSchools, aliasIdFromDisplay } from "../lib/school"
+import { useRef, useState } from "react";
+import type { Person } from "../types";
+import type { SchoolAlias } from "../config/settings";
+import { useSettings } from "../state/settingsStore";
+import { distinctRawSchools, aliasIdFromDisplay } from "../lib/school";
 
-export type SettingsTab = "locatie" | "groepen" | "grootte" | "statussen" | "scholen"
-type Tab = SettingsTab
+export type SettingsTab =
+  | "locatie"
+  | "groepen"
+  | "grootte"
+  | "statussen"
+  | "scholen";
+type Tab = SettingsTab;
 
 const TABS: { id: Tab; label: string }[] = [
   { id: "locatie", label: "Locatie & profielen" },
@@ -13,18 +18,18 @@ const TABS: { id: Tab; label: string }[] = [
   { id: "grootte", label: "Groepsgrootte" },
   { id: "statussen", label: "Statussen" },
   { id: "scholen", label: "Scholen" },
-]
+];
 
 export function SettingsModal({
   persons,
   onClose,
   initialTab = "locatie",
 }: {
-  persons: Person[]
-  onClose: () => void
-  initialTab?: SettingsTab
+  persons: Person[];
+  onClose: () => void;
+  initialTab?: SettingsTab;
 }) {
-  const [tab, setTab] = useState<Tab>(initialTab)
+  const [tab, setTab] = useState<Tab>(initialTab);
 
   return (
     <div className="modal-backdrop" onClick={onClose}>
@@ -57,21 +62,24 @@ export function SettingsModal({
         </div>
       </div>
     </div>
-  )
+  );
 }
 
 // --- Locatie & profielen -----------------------------------------------------
 
 function LocatieTab() {
-  const s = useSettings()
-  const importRef = useRef<HTMLInputElement>(null)
-  const [newName, setNewName] = useState("")
+  const s = useSettings();
+  const importRef = useRef<HTMLInputElement>(null);
+  const [newName, setNewName] = useState("");
 
   return (
     <div className="form">
       <label className="field">
         <span>Actief profiel</span>
-        <select value={s.activeId} onChange={(e) => s.switchProfile(e.target.value)}>
+        <select
+          value={s.activeId}
+          onChange={(e) => s.switchProfile(e.target.value)}
+        >
           {s.profiles.map((p) => (
             <option key={p.id} value={p.id}>
               {p.name}
@@ -98,8 +106,8 @@ function LocatieTab() {
           className="btn"
           onClick={() => {
             if (newName.trim()) {
-              s.createProfile(newName.trim())
-              setNewName("")
+              s.createProfile(newName.trim());
+              setNewName("");
             }
           }}
         >
@@ -111,7 +119,10 @@ function LocatieTab() {
         <button className="btn secondary" onClick={s.exportActive}>
           ⬇ Exporteer locatie.json
         </button>
-        <button className="btn secondary" onClick={() => importRef.current?.click()}>
+        <button
+          className="btn secondary"
+          onClick={() => importRef.current?.click()}
+        >
           ⬆ Importeer profiel
         </button>
         <input
@@ -120,22 +131,25 @@ function LocatieTab() {
           accept=".json"
           style={{ display: "none" }}
           onChange={async (e) => {
-            const f = e.target.files?.[0]
+            const f = e.target.files?.[0];
             if (f) {
               try {
-                await s.importProfile(f)
+                await s.importProfile(f);
               } catch {
-                alert("Kon dit bestand niet importeren (geen geldig profiel?).")
+                alert(
+                  "Kon dit bestand niet importeren (geen geldig profiel?).",
+                );
               }
             }
-            e.target.value = ""
+            e.target.value = "";
           }}
         />
         {s.profiles.length > 1 && (
           <button
             className="btn ghost danger"
             onClick={() => {
-              if (confirm(`Profiel "${s.settings.locationName}" verwijderen?`)) s.deleteProfile(s.activeId)
+              if (confirm(`Profiel "${s.settings.locationName}" verwijderen?`))
+                s.deleteProfile(s.activeId);
             }}
           >
             🗑 Verwijder dit profiel
@@ -144,33 +158,34 @@ function LocatieTab() {
       </div>
 
       <p className="hint">
-        Instellingen worden lokaal in je browser bewaard (geen persoonsgegevens). Deel een locatie met
-        een collega via Exporteer/Importeer.
+        Instellingen worden lokaal in je browser bewaard (geen
+        persoonsgegevens). Deel een locatie met een collega via
+        Exporteer/Importeer.
       </p>
     </div>
-  )
+  );
 }
 
 // --- Groepen -----------------------------------------------------------------
 
 function GroepenTab() {
-  const { settings, updateSettings } = useSettings()
-  const names = settings.groupNames
+  const { settings, updateSettings } = useSettings();
+  const names = settings.groupNames;
 
-  const setNames = (next: string[]) => updateSettings({ groupNames: next })
+  const setNames = (next: string[]) => updateSettings({ groupNames: next });
   const move = (i: number, dir: -1 | 1) => {
-    const j = i + dir
-    if (j < 0 || j >= names.length) return
-    const next = [...names]
-    ;[next[i], next[j]] = [next[j], next[i]]
-    setNames(next)
-  }
+    const j = i + dir;
+    if (j < 0 || j >= names.length) return;
+    const next = [...names];
+    [next[i], next[j]] = [next[j], next[i]];
+    setNames(next);
+  };
 
   return (
     <div className="form">
       <p className="hint">
-        Groepsnamen worden op volgorde gebruikt. Zijn er meer groepen (begeleiders) dan namen, dan
-        krijgen die "Naamloos N".
+        Groepsnamen worden op volgorde gebruikt. Zijn er meer groepen
+        (begeleiders) dan namen, dan krijgen die "Naamloos N".
       </p>
       <div className="list">
         {names.map((n, i) => (
@@ -179,15 +194,23 @@ function GroepenTab() {
             <input
               value={n}
               onChange={(e) => {
-                const next = [...names]
-                next[i] = e.target.value
-                setNames(next)
+                const next = [...names];
+                next[i] = e.target.value;
+                setNames(next);
               }}
             />
-            <button className="icon-btn" title="Omhoog" onClick={() => move(i, -1)}>
+            <button
+              className="icon-btn"
+              title="Omhoog"
+              onClick={() => move(i, -1)}
+            >
               ↑
             </button>
-            <button className="icon-btn" title="Omlaag" onClick={() => move(i, 1)}>
+            <button
+              className="icon-btn"
+              title="Omlaag"
+              onClick={() => move(i, 1)}
+            >
               ↓
             </button>
             <button
@@ -200,17 +223,20 @@ function GroepenTab() {
           </div>
         ))}
       </div>
-      <button className="btn" onClick={() => setNames([...names, `Groep ${names.length + 1}`])}>
+      <button
+        className="btn"
+        onClick={() => setNames([...names, `Groep ${names.length + 1}`])}
+      >
         + Groepsnaam toevoegen
       </button>
     </div>
-  )
+  );
 }
 
 // --- Groepsgrootte -----------------------------------------------------------
 
 function GrootteTab() {
-  const { settings, updateSettings } = useSettings()
+  const { settings, updateSettings } = useSettings();
   return (
     <div className="form">
       <label className="field">
@@ -220,7 +246,11 @@ function GrootteTab() {
           min={1}
           max={20}
           value={settings.maxChildrenPerGroup}
-          onChange={(e) => updateSettings({ maxChildrenPerGroup: Math.max(1, Number(e.target.value) || 1) })}
+          onChange={(e) =>
+            updateSettings({
+              maxChildrenPerGroup: Math.max(1, Number(e.target.value) || 1),
+            })
+          }
         />
       </label>
       <label className="field">
@@ -230,43 +260,59 @@ function GrootteTab() {
           min={1}
           max={100}
           value={settings.targetGroups}
-          onChange={(e) => updateSettings({ targetGroups: Math.max(1, Number(e.target.value) || 1) })}
+          onChange={(e) =>
+            updateSettings({
+              targetGroups: Math.max(1, Number(e.target.value) || 1),
+            })
+          }
         />
-        <small className="hint">Alleen voor een waarschuwing; het echte aantal volgt uit de begeleiders.</small>
+        <small className="hint">
+          Alleen voor een waarschuwing; het echte aantal volgt uit de
+          begeleiders.
+        </small>
       </label>
       <label className="checkbox">
         <input
           type="checkbox"
           checked={settings.preferEvenGroups}
-          onChange={(e) => updateSettings({ preferEvenGroups: e.target.checked })}
+          onChange={(e) =>
+            updateSettings({ preferEvenGroups: e.target.checked })
+          }
         />
         <span>Voorkeur voor een even aantal kinderen per groep</span>
       </label>
     </div>
-  )
+  );
 }
 
 // --- Statussen ---------------------------------------------------------------
 
 function StatussenTab({ persons }: { persons: Person[] }) {
-  const { settings, updateSettings } = useSettings()
-  const counts: Record<string, number> = {}
-  for (const p of persons) counts[p.status] = (counts[p.status] || 0) + 1
-  const statuses = Object.entries(counts).sort((a, b) => b[1] - a[1])
+  const { settings, updateSettings } = useSettings();
+  const counts: Record<string, number> = {};
+  for (const p of persons) counts[p.status] = (counts[p.status] || 0) + 1;
+  const statuses = Object.entries(counts).sort((a, b) => b[1] - a[1]);
 
   const toggle = (status: string) => {
-    const cur = new Set(settings.defaultStatuses)
-    if (cur.has(status)) cur.delete(status)
-    else cur.add(status)
-    updateSettings({ defaultStatuses: [...cur] })
-  }
+    const cur = new Set(settings.defaultStatuses);
+    if (cur.has(status)) cur.delete(status);
+    else cur.add(status);
+    updateSettings({ defaultStatuses: [...cur] });
+  };
 
   return (
     <div className="form">
-      <p className="hint">Welke inschrijvingsstatussen meedoen in de indeling. Wijzigingen passen direct toe.</p>
-      {statuses.length === 0 && <p className="hint">Laad eerst een CSV om de statussen te zien.</p>}
+      <p className="hint">
+        Kies hier welke inschrijvingsstatussen meedoen bij de indeling van de
+        kinderen. Wijzigingen worden direct toegepast.
+      </p>
+      {statuses.length === 0 && (
+        <p className="hint">Laad eerst een CSV om de statussen te zien.</p>
+      )}
       {/* Toon ook statussen uit settings die (nog) niet in de data zitten. */}
-      {Array.from(new Set([...statuses.map((x) => x[0]), ...settings.defaultStatuses])).map((status) => (
+      {Array.from(
+        new Set([...statuses.map((x) => x[0]), ...settings.defaultStatuses]),
+      ).map((status) => (
         <label key={status} className="checkbox">
           <input
             type="checkbox"
@@ -279,34 +325,40 @@ function StatussenTab({ persons }: { persons: Person[] }) {
         </label>
       ))}
     </div>
-  )
+  );
 }
 
 // --- Scholen -----------------------------------------------------------------
 
 function ScholenTab({ persons }: { persons: Person[] }) {
-  const { settings, updateSettings } = useSettings()
-  const aliases = settings.schoolAliases
-  const setAliases = (next: SchoolAlias[]) => updateSettings({ schoolAliases: next })
+  const { settings, updateSettings } = useSettings();
+  const aliases = settings.schoolAliases;
+  const setAliases = (next: SchoolAlias[]) =>
+    updateSettings({ schoolAliases: next });
 
-  const rawSchools = distinctRawSchools(persons, aliases)
+  const rawSchools = distinctRawSchools(persons, aliases);
 
   const linkRawToAlias = (raw: string, aliasId: string) => {
     setAliases(
-      aliases.map((a) => (a.id === aliasId ? { ...a, terms: [...new Set([...a.terms, raw])] } : a)),
-    )
-  }
+      aliases.map((a) =>
+        a.id === aliasId ? { ...a, terms: [...new Set([...a.terms, raw])] } : a,
+      ),
+    );
+  };
   const createAliasFromRaw = (raw: string) => {
-    let id = aliasIdFromDisplay(raw)
-    while (aliases.some((a) => a.id === id)) id += "-2"
-    setAliases([...aliases, { id, display: raw, terms: [raw] }])
-  }
+    let id = aliasIdFromDisplay(raw);
+    while (aliases.some((a) => a.id === id)) id += "-2";
+    setAliases([...aliases, { id, display: raw, terms: [raw] }]);
+  };
 
   return (
     <div className="form">
       <p className="hint">
-        Aliassen koppelen schrijfwijzen aan één nette schoolnaam. Varianten met dezelfde alias gelden
-        in de indeling als <b>dezelfde school</b>.
+        Alle schoolnamen worden genormaliseerd en gefiltert, dit omdat mensen
+        schoolnamen op meerdere manieren schrijven. Deze pagina laat de scholen
+        zien in de huidig geopende export en linked deze aan een instelbaar
+        alias. Op deze manier kan het algoritme de kinderen indelen bij
+        klasgenootjes.
       </p>
 
       {persons.length > 0 && (
@@ -318,16 +370,19 @@ function ScholenTab({ persons }: { persons: Person[] }) {
                 <span className="grow">
                   {rs.raw} <small className="muted">×{rs.count}</small>
                 </span>
-                <span className={`resolve${rs.resolution.aliasId ? "" : " none"}`}>
-                  → {rs.resolution.aliasId ? rs.resolution.pretty : "geen alias"}
+                <span
+                  className={`resolve${rs.resolution.aliasId ? "" : " none"}`}
+                >
+                  →{" "}
+                  {rs.resolution.aliasId ? rs.resolution.pretty : "geen alias"}
                 </span>
                 <select
                   value=""
                   onChange={(e) => {
-                    const v = e.target.value
-                    if (v === "__new__") createAliasFromRaw(rs.raw)
-                    else if (v) linkRawToAlias(rs.raw, v)
-                    e.target.value = ""
+                    const v = e.target.value;
+                    if (v === "__new__") createAliasFromRaw(rs.raw);
+                    else if (v) linkRawToAlias(rs.raw, v);
+                    e.target.value = "";
                   }}
                 >
                   <option value="">koppel…</option>
@@ -353,9 +408,9 @@ function ScholenTab({ persons }: { persons: Person[] }) {
               value={a.display}
               placeholder="Nette naam"
               onChange={(e) => {
-                const next = [...aliases]
-                next[i] = { ...a, display: e.target.value }
-                setAliases(next)
+                const next = [...aliases];
+                next[i] = { ...a, display: e.target.value };
+                setAliases(next);
               }}
             />
             <input
@@ -363,9 +418,15 @@ function ScholenTab({ persons }: { persons: Person[] }) {
               value={a.terms.join(", ")}
               placeholder="schrijfwijzen, komma-gescheiden"
               onChange={(e) => {
-                const next = [...aliases]
-                next[i] = { ...a, terms: e.target.value.split(",").map((t) => t.trim()).filter(Boolean) }
-                setAliases(next)
+                const next = [...aliases];
+                next[i] = {
+                  ...a,
+                  terms: e.target.value
+                    .split(",")
+                    .map((t) => t.trim())
+                    .filter(Boolean),
+                };
+                setAliases(next);
               }}
             />
             <button
@@ -381,13 +442,13 @@ function ScholenTab({ persons }: { persons: Person[] }) {
       <button
         className="btn"
         onClick={() => {
-          let id = "school-" + (aliases.length + 1)
-          while (aliases.some((a) => a.id === id)) id += "-2"
-          setAliases([...aliases, { id, display: "", terms: [] }])
+          let id = "school-" + (aliases.length + 1);
+          while (aliases.some((a) => a.id === id)) id += "-2";
+          setAliases([...aliases, { id, display: "", terms: [] }]);
         }}
       >
         + Alias toevoegen
       </button>
     </div>
-  )
+  );
 }
