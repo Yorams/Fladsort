@@ -1,4 +1,4 @@
-# Fladsort v3
+# Fladsort
 
 Webapp die kinderen van het kindervakantiefestijn automatisch in **16 groepen** indeelt op
 basis van de CSV-export, en per kind laat zien **waaróm** het in een groep zit. Conflicten en
@@ -39,12 +39,12 @@ HTTPS voor. De meegeleverde [`nginx.conf`](nginx.conf) regelt de SPA-fallback en
 De indeling volgt het handmatige werkproces. Elke plaatsing wordt gelogd; klik op een kind om
 de volledige redenering te zien.
 
-1. **Groepen uit begeleiders** — duo-begeleiders (kolom *Duo met*) vormen samen één groep,
+1. **Groepen uit begeleiders** — duo-begeleiders (kolom _Duo met_) vormen samen één groep,
    solo-begeleiders elk één groep. Doel: 16 groepen.
-2. **Eigen kinderen van begeleiders** — kinderen met hetzelfde *Account* als een begeleider
+2. **Eigen kinderen van begeleiders** — kinderen met hetzelfde _Account_ als een begeleider
    gaan bij hun ouder in de groep.
-3. **Vriendjes (en begeleiders) koppelen** — namen uit *Eventueel in een groepje met* (en soms
-   *Opmerkingen*) worden fuzzy gematcht. Verwijst een naam naar een **begeleider** (bv.
+3. **Vriendjes (en begeleiders) koppelen** — namen uit _Eventueel in een groepje met_ (en soms
+   _Opmerkingen_) worden fuzzy gematcht. Verwijst een naam naar een **begeleider** (bv.
    "groepje van Annemieke Schreuders"), dan gaat het kind naar die begeleiders groep. Bij alleen
    een voornaam wordt school/groep als tiebreak gebruikt. Zit de vriend al in een groep met ruimte,
    dan komt het kind erbij.
@@ -85,9 +85,9 @@ persoonsgegevens** — delen kan veilig via Exporteer/Importeer.
 
 ## Bediening
 
-- **Statusfilter** (bovenin): kies welke inschrijvingen meedoen (standaard *Ingeschreven* +
-  *Ingeloot & wacht op betaling*).
-- **Slepen**: sleep een kind naar een andere groep, of naar het vak *Niet ingedeeld* om het uit
+- **Statusfilter** (bovenin): kies welke inschrijvingen meedoen (standaard _Ingeschreven_ +
+  _Ingeloot & wacht op betaling_).
+- **Slepen**: sleep een kind naar een andere groep, of naar het vak _Niet ingedeeld_ om het uit
   zijn groep te halen. Handmatige verplaatsingen blijven bewaard (ook na verversen).
 - **Opnieuw indelen**: zet alle handmatige verplaatsingen terug naar de automatische indeling.
 - **Exporteer .xlsx**: één rij per persoon, inclusief groep, reden van indeling en conflicten.
