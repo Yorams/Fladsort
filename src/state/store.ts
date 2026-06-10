@@ -15,7 +15,6 @@ const UNASSIGNED = "__UNASSIGNED__"
 interface Persisted {
   csvText: string
   fileName: string
-  selectedStatuses: string[]
   manualMoves: Record<string, string> // childId -> groupId | UNASSIGNED
 }
 
@@ -65,10 +64,8 @@ export interface FladsortStore {
   fileName: string
   persons: Person[]
   statusCounts: Record<string, number>
-  selectedStatuses: Set<string>
   result: AssignmentResult | null
   loadCsv: (text: string, fileName: string) => void
-  toggleStatus: (status: string) => void
   moveChild: (childId: string, targetGroupId: string | null) => void
   reset: () => void
   clearAll: () => void
@@ -79,9 +76,6 @@ export function useFladsort(settings: Settings): FladsortStore {
 
   const [csvText, setCsvText] = useState(persisted?.csvText ?? "")
   const [fileName, setFileName] = useState(persisted?.fileName ?? "")
-  const [selectedStatuses, setSelectedStatuses] = useState<Set<string>>(
-    new Set(persisted?.selectedStatuses ?? settings.defaultStatuses),
-  )
   const [manualMoves, setManualMoves] = useState<Record<string, string>>(persisted?.manualMoves ?? {})
 
   // Parse CSV → personen + statusCounts (schoolaliassen uit settings).
@@ -90,10 +84,10 @@ export function useFladsort(settings: Settings): FladsortStore {
     return parseCsv(csvText, settings)
   }, [csvText, settings])
 
-  // Filter op gekozen statussen.
+  // Filter op de statussen uit de instellingen (Statussen-tab).
   const filtered = useMemo(
-    () => parsed.persons.filter((p) => selectedStatuses.has(p.status)),
-    [parsed.persons, selectedStatuses],
+    () => parsed.persons.filter((p) => settings.defaultStatuses.includes(p.status)),
+    [parsed.persons, settings.defaultStatuses],
   )
 
   // Automatische indeling + handmatige moves.
@@ -109,27 +103,18 @@ export function useFladsort(settings: Settings): FladsortStore {
       localStorage.removeItem(LS_KEY)
       return
     }
-    const data: Persisted = { csvText, fileName, selectedStatuses: [...selectedStatuses], manualMoves }
+    const data: Persisted = { csvText, fileName, manualMoves }
     try {
       localStorage.setItem(LS_KEY, JSON.stringify(data))
     } catch {
       /* quota — negeer */
     }
-  }, [csvText, fileName, selectedStatuses, manualMoves])
+  }, [csvText, fileName, manualMoves])
 
   const loadCsv = useCallback((text: string, name: string) => {
     setCsvText(text)
     setFileName(name)
     setManualMoves({})
-  }, [])
-
-  const toggleStatus = useCallback((status: string) => {
-    setSelectedStatuses((prev) => {
-      const next = new Set(prev)
-      if (next.has(status)) next.delete(status)
-      else next.add(status)
-      return next
-    })
   }, [])
 
   const moveChild = useCallback((childId: string, targetGroupId: string | null) => {
@@ -150,10 +135,8 @@ export function useFladsort(settings: Settings): FladsortStore {
     fileName,
     persons: parsed.persons,
     statusCounts: parsed.statusCounts,
-    selectedStatuses,
     result,
     loadCsv,
-    toggleStatus,
     moveChild,
     reset,
     clearAll,

@@ -1,21 +1,21 @@
-import { useRef, useState } from "react"
-import type { FladsortStore } from "../state/store"
+import { useRef, useState } from "react";
+import type { FladsortStore } from "../state/store";
 
 export function Uploader({ store }: { store: FladsortStore }) {
-  const [drag, setDrag] = useState(false)
-  const inputRef = useRef<HTMLInputElement>(null)
+  const [drag, setDrag] = useState(false);
+  const inputRef = useRef<HTMLInputElement>(null);
 
   const onFile = (file: File) => {
-    const reader = new FileReader()
-    reader.onload = () => store.loadCsv(String(reader.result), file.name)
-    reader.readAsText(file, "utf-8")
-  }
+    const reader = new FileReader();
+    reader.onload = () => store.loadCsv(String(reader.result), file.name);
+    reader.readAsText(file, "utf-8");
+  };
 
   return (
     <div className="welcome">
       <h2 className="welcome-title">🦖 Welkom bij Fladsort</h2>
       <p className="welcome-lead">
-        Deel de kinderen van het vakantiefestijn automatisch in groepjes in, op basis van je
+        Deel de kinderen van je locatie automatisch in, op basis van je
         inschrijvingen-export.
       </p>
 
@@ -24,19 +24,21 @@ export function Uploader({ store }: { store: FladsortStore }) {
         className={`dropzone${drag ? " drag" : ""}`}
         onClick={() => inputRef.current?.click()}
         onDragOver={(e) => {
-          e.preventDefault()
-          setDrag(true)
+          e.preventDefault();
+          setDrag(true);
         }}
         onDragLeave={() => setDrag(false)}
         onDrop={(e) => {
-          e.preventDefault()
-          setDrag(false)
-          const f = e.dataTransfer.files?.[0]
-          if (f) onFile(f)
+          e.preventDefault();
+          setDrag(false);
+          const f = e.dataTransfer.files?.[0];
+          if (f) onFile(f);
         }}
       >
         <div className="dz-icon">📂</div>
-        <div className="dz-main">Sleep je CSV-bestand hierheen of klik om te kiezen</div>
+        <div className="dz-main">
+          Sleep je CSV-bestand hierheen of klik om te kiezen
+        </div>
         <div className="dz-sub">Het bestand blijft op je eigen computer.</div>
       </button>
 
@@ -46,9 +48,9 @@ export function Uploader({ store }: { store: FladsortStore }) {
         accept=".csv"
         style={{ display: "none" }}
         onChange={(e) => {
-          const f = e.target.files?.[0]
-          if (f) onFile(f)
-          e.target.value = ""
+          const f = e.target.files?.[0];
+          if (f) onFile(f);
+          e.target.value = "";
         }}
       />
 
@@ -56,26 +58,30 @@ export function Uploader({ store }: { store: FladsortStore }) {
         <p>Zodra je een bestand laadt, doet Fladsort het volgende:</p>
         <ul>
           <li>
-            <b>Groepjes maken</b> rond de begeleiders (duo's samen) en hun eigen kinderen erbij.
+            <b>Groepjes maken</b> rond de begeleiders (duo's samen) en hun eigen
+            kinderen erbij.
           </li>
           <li>
-            <b>Vriendjes koppelen</b> via "wil in een groepje met" en de opmerkingen — ook bij
-            schrijffouten of alleen een voornaam.
+            <b>Vriendjes koppelen</b> via "wil in een groepje met" en de
+            opmerkingen — ook bij schrijffouten of alleen een voornaam.
           </li>
           <li>
-            <b>Uitleg per kind</b>: klik een kind aan om te zien waaróm het in die groep zit.
+            <b>Uitleg per kind</b>: klik een kind aan om te zien waaróm het in
+            die groep zit.
           </li>
           <li>
-            <b>Conflicten apart</b>: twijfelgevallen zet je met slepen zelf in de juiste groep.
+            <b>Conflicten apart</b>: twijfelgevallen zet je met slepen zelf in
+            de juiste groep.
           </li>
           <li>
             <b>Exporteren</b> naar Excel als je tevreden bent.
           </li>
         </ul>
         <p className="welcome-privacy">
-          🔒 Alle gegevens blijven in je browser — er wordt niets naar een server gestuurd.
+          🔒 Alle gegevens blijven in je browser — er wordt niets naar een
+          server gestuurd.
         </p>
       </div>
     </div>
-  )
+  );
 }

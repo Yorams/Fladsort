@@ -254,7 +254,7 @@ function StatussenTab({ persons }: { persons: Person[] }) {
 
   return (
     <div className="form">
-      <p className="hint">Welke inschrijvingsstatussen standaard meedoen in de indeling.</p>
+      <p className="hint">Welke inschrijvingsstatussen meedoen in de indeling. Wijzigingen passen direct toe.</p>
       {statuses.length === 0 && <p className="hint">Laad eerst een CSV om de statussen te zien.</p>}
       {/* Toon ook statussen uit settings die (nog) niet in de data zitten. */}
       {Array.from(new Set([...statuses.map((x) => x[0]), ...settings.defaultStatuses])).map((status) => (

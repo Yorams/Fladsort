@@ -23,9 +23,6 @@ export function Toolbar({ store, onOpenSettings }: Props) {
     reader.readAsText(file, "utf-8")
   }
 
-  // Statussen die in de data voorkomen (gesorteerd op aantal).
-  const statuses = Object.entries(store.statusCounts).sort((a, b) => b[1] - a[1])
-
   return (
     <div className="toolbar">
       <h1>🦖 Fladsort</h1>
@@ -45,22 +42,7 @@ export function Toolbar({ store, onOpenSettings }: Props) {
       <button className="btn secondary" onClick={() => fileRef.current?.click()}>
         📂 CSV laden
       </button>
-      {store.fileName && <span style={{ fontSize: 12, color: "#94a3b8" }}>{store.fileName}</span>}
-
-      {statuses.length > 0 && (
-        <div className="statusfilter">
-          {statuses.map(([s, n]) => (
-            <label key={s} title={`${n} inschrijvingen`}>
-              <input
-                type="checkbox"
-                checked={store.selectedStatuses.has(s)}
-                onChange={() => store.toggleStatus(s)}
-              />
-              {s} ({n})
-            </label>
-          ))}
-        </div>
-      )}
+      {store.fileName && <span style={{ fontSize: 12, color: "var(--muted)" }}>{store.fileName}</span>}
 
       <div className="spacer" />
 
@@ -77,10 +59,10 @@ export function Toolbar({ store, onOpenSettings }: Props) {
             <b>{placed.size}</b> ingedeeld
           </span>
           <span>
-            <b style={{ color: unplaced ? "#fca5a5" : "#fff" }}>{unplaced}</b> open
+            <b style={{ color: unplaced ? "var(--red)" : "var(--ink)" }}>{unplaced}</b> open
           </span>
           <span>
-            <b style={{ color: res.warnings.length ? "#fcd34d" : "#fff" }}>{res.warnings.length}</b> waarsch.
+            <b style={{ color: res.warnings.length ? "var(--amber)" : "var(--ink)" }}>{res.warnings.length}</b> waarsch.
           </span>
         </div>
       )}

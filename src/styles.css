@@ -1,19 +1,22 @@
 :root {
-  --bg: #0f172a;
-  --bg-soft: #1e293b;
+  /* Huisstijl Fladderen.nl: zacht lichtblauw + blue-500 accent */
+  --bg-page: #eaf2fc;
   --panel: #ffffff;
-  --ink: #0f172a;
+  --ink: #1e293b;
   --muted: #64748b;
-  --line: #e2e8f0;
-  --accent: #4f46e5;
-  --accent-soft: #eef2ff;
+  --line: #dbe7f5;
+  --accent: #3b82f6; /* blue-500 */
+  --accent-hover: #2563eb; /* blue-600 */
+  --accent-soft: #eff6ff; /* blue-50 */
   --green: #16a34a;
   --green-soft: #dcfce7;
   --amber: #d97706;
   --amber-soft: #fef3c7;
   --red: #dc2626;
   --red-soft: #fee2e2;
+  --font-display: "Pacifico", "Inter", cursive;
   font-family: "Inter", system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+  font-feature-settings: "cv02", "cv03", "cv04", "cv11";
   color: var(--ink);
 }
 
@@ -27,7 +30,7 @@ body,
   margin: 0;
 }
 body {
-  background: #f1f5f9;
+  background: var(--bg-page);
 }
 
 .app {
@@ -40,17 +43,21 @@ body {
 .toolbar {
   display: flex;
   align-items: center;
-  gap: 16px;
-  padding: 10px 16px;
-  background: var(--bg);
-  color: #fff;
+  gap: 14px;
+  padding: 10px 18px;
+  background: var(--panel);
+  color: var(--ink);
+  border-bottom: 1px solid var(--line);
+  box-shadow: 0 1px 8px rgba(59, 130, 246, 0.06);
   flex-wrap: wrap;
 }
 .toolbar h1 {
-  font-size: 18px;
+  font-size: 26px;
   margin: 0;
-  font-weight: 700;
-  letter-spacing: 0.2px;
+  font-family: var(--font-display);
+  font-weight: 400;
+  color: var(--accent);
+  letter-spacing: 0.3px;
 }
 .toolbar .spacer {
   flex: 1;
@@ -59,17 +66,17 @@ body {
   display: flex;
   gap: 14px;
   font-size: 13px;
-  color: #cbd5e1;
+  color: var(--muted);
 }
 .toolbar .stats b {
-  color: #fff;
+  color: var(--ink);
 }
 .statusfilter {
   display: flex;
   gap: 10px;
   font-size: 12px;
   align-items: center;
-  color: #cbd5e1;
+  color: var(--muted);
 }
 .statusfilter label {
   display: flex;
@@ -78,26 +85,44 @@ body {
   cursor: pointer;
   white-space: nowrap;
 }
+.statusfilter input,
+.checkbox input {
+  accent-color: var(--accent);
+}
 
 .btn {
   background: var(--accent);
   color: #fff;
   border: 0;
-  padding: 8px 14px;
-  border-radius: 8px;
+  padding: 8px 15px;
+  border-radius: 999px;
   font-size: 13px;
   font-weight: 600;
+  font-family: inherit;
   cursor: pointer;
+  transition: background 0.15s, transform 0.1s, filter 0.15s;
+}
+.btn:hover {
+  background: var(--accent-hover);
 }
 .btn.secondary {
-  background: #334155;
+  background: var(--accent-soft);
+  color: var(--accent-hover);
+}
+.btn.secondary:hover {
+  background: #dbeafe;
 }
 .btn.ghost {
   background: transparent;
-  border: 1px solid #475569;
+  color: var(--ink);
+  border: 1px solid var(--line);
 }
-.btn:hover {
-  filter: brightness(1.08);
+.btn.ghost:hover {
+  background: var(--accent-soft);
+  border-color: var(--accent);
+}
+.btn:active {
+  transform: translateY(1px);
 }
 
 /* --- Layout --- */
@@ -127,8 +152,11 @@ body {
   text-align: center;
 }
 .welcome-title {
-  margin: 0 0 6px;
-  font-size: 24px;
+  margin: 0 0 10px;
+  font-size: 38px;
+  font-family: var(--font-display);
+  font-weight: 400;
+  color: var(--accent);
 }
 .welcome-lead {
   color: var(--muted);
@@ -177,9 +205,10 @@ body {
   margin-top: 24px;
   background: #fff;
   border: 1px solid var(--line);
-  border-radius: 14px;
-  padding: 18px 22px;
+  border-radius: 16px;
+  padding: 20px 24px;
   font-size: 13px;
+  box-shadow: 0 8px 28px rgba(59, 130, 246, 0.08);
 }
 .welcome-info > p {
   margin: 0 0 10px;
@@ -213,14 +242,16 @@ body {
 .group {
   background: #fff;
   border: 1px solid var(--line);
-  border-radius: 12px;
+  border-radius: 14px;
   display: flex;
   flex-direction: column;
   min-height: 90px;
+  box-shadow: 0 2px 10px rgba(59, 130, 246, 0.05);
 }
 .group.over {
   outline: 2px solid var(--accent);
   outline-offset: 1px;
+  box-shadow: 0 4px 16px rgba(59, 130, 246, 0.18);
 }
 .group-head {
   padding: 8px 10px;
@@ -416,9 +447,10 @@ body {
 }
 .location {
   font-size: 12px;
-  color: #cbd5e1;
-  background: #1e293b;
-  padding: 3px 9px;
+  font-weight: 600;
+  color: var(--accent-hover);
+  background: var(--accent-soft);
+  padding: 4px 11px;
   border-radius: 999px;
   white-space: nowrap;
 }

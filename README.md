@@ -87,8 +87,8 @@ persoonsgegevens** — delen kan veilig via Exporteer/Importeer.
 
 ## Bediening
 
-- **Statusfilter** (bovenin): kies welke inschrijvingen meedoen (standaard _Ingeschreven_ +
-  _Ingeloot & wacht op betaling_).
+- **Statussen**: welke inschrijvingen meedoen stel je in via **⚙ Instellingen → Statussen**
+  (standaard _Ingeschreven_ + _Ingeloot & wacht op betaling_). Wijzigingen passen direct toe.
 - **Slepen**: sleep een kind naar een andere groep, of naar het vak _Niet ingedeeld_ om het uit
   zijn groep te halen. Handmatige verplaatsingen blijven bewaard (ook na verversen).
 - **Opnieuw indelen**: zet alle handmatige verplaatsingen terug naar de automatische indeling.
